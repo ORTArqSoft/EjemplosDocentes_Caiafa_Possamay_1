@@ -36,7 +36,7 @@ let validar_digitos = async function(input, next){
     next(null, input); 
 };
 
-let validar_numero = async function(input, next){
+let validar_numero = function(input, next){
     let config = {
         headers: {
             apikey: API_KEY,
