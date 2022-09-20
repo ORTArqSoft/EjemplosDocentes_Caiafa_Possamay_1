@@ -1,0 +1,16 @@
+{
+  "name": "ejemplo-redis",
+  "version": "1.0.0",
+  "description": "",
+  "main": "ejercicio_redis_broker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.2",
+    "pipes-and-filters": "^0.0.4",
+    "redis": "^4.3.1"
+  }
+}
