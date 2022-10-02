@@ -3,9 +3,10 @@ const queueHard = new Bull('queue-hard');
 const queueLight = new Bull('queue-light');
 const queueMedium = new Bull('queue-medium');
 
+// parámetro cantidad de queues a crear.
 const data = process.argv[2];
 if(!data){
-    console.log('se espera parametro cantidad de jobs');
+    console.log('se espera parámetro cantidad de jobs');
     process.exit(1);
 }
 for(i=0; i < data; i++){
@@ -14,12 +15,23 @@ for(i=0; i < data; i++){
         type:'hard',
     });
 }
+queueHard.process((job, done) => {
+    const Filter = require('./defer-binding/implementation')({job:job});
+    const next = 'medium';
+    Filter.run(job, next, done);
+});
 
-const concurrency = 2;
-// Se procesan varios "hard" simultáneamente para dar paso a los "medium".
-queueHard.process(concurrency, `${__dirname}/processors/processor-hard.js`);
-queueMedium.process(`${__dirname}/processors/processor-medium.js`);
-queueLight.process(`${__dirname}/processors/processor-light.js`);
+queueMedium.process((job, done) => {
+    const Filter = require('./defer-binding/implementation')({job:job});
+    const next = 'light';
+    Filter.run(job, next, done);
+});
+
+queueLight.process((job, done) => {
+    const Filter = require('./defer-binding/implementation')({job:job});
+    const next = null;
+    Filter.run(job, next, done);
+});
 
 queueHard.on('completed', (job, result) => {
     console.log('>>> Hard', `job id ${job.id}`, 'completed');

@@ -15,8 +15,6 @@ for(i=0; i < data; i++){
     });
 }
 
-// Se termina de procesar todos los filtros "hard, medium, light" antes de pasar al siguiente "hard".
-// solucion => procesos separados con promises para no dejar "stalled" la queue con código bloqueante y agregar procesos simultáneos.
 queueMedium.process(`${__dirname}/processors/processor-medium.js`);
 queueHard.process(`${__dirname}/processors/processor-hard.js`);
 queueLight.process(`${__dirname}/processors/processor-light.js`);
