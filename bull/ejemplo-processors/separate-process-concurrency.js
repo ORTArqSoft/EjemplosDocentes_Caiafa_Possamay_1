@@ -16,7 +16,7 @@ for(i=0; i < data; i++){
 }
 
 const concurrency = 2;
-// atributo calidad disponibilidad => alto. Se procesan varios "hard" simultáneamente para dar paso a los "medium".
+// Se procesan varios "hard" simultáneamente para dar paso a los "medium".
 queueHard.process(concurrency, `${__dirname}/processors/processor-hard.js`);
 queueMedium.process(`${__dirname}/processors/processor-medium.js`);
 queueLight.process(`${__dirname}/processors/processor-light.js`);
